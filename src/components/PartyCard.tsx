@@ -88,6 +88,7 @@ export function PartyCard({
             <div
               key={meter.id}
               className="rainbow-border grid grid-cols-1 gap-2 rounded-xl p-3 shadow-sm sm:grid-cols-12"
+                className="grid grid-cols-1 gap-2 rounded-xl p-3 shadow-sm sm:grid-cols-12 theme-rainbow:rainbow-border"
             >
               <div className="sm:col-span-7">
                 <Label>Bezeichnung</Label>

@@ -298,7 +298,7 @@ export function EuerPage() {
           <div className="text-xs text-slate-500">Anzahl: {entries.length}</div>
         </div>
 
-        <div className="rainbow-border overflow-x-auto rounded-2xl shadow-sm">
+        <div className="overflow-x-auto rounded-2xl shadow-sm theme-rainbow:rainbow-border">
           <table className="min-w-[980px] w-full text-left text-sm">
             <thead className="bg-gradient-to-r from-pink-50 via-amber-50 to-sky-50 text-slate-700">
               <tr>

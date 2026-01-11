@@ -39,6 +39,7 @@ export function DocumentsModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div
         className="absolute inset-0 bg-gradient-to-br from-pink-500/20 via-amber-400/15 to-sky-500/20"
+          className="absolute inset-0 theme-rainbow:bg-gradient-to-br theme-rainbow:from-pink-500/20 theme-rainbow:via-amber-400/15 theme-rainbow:to-sky-500/20 bg-white/80 theme-light:bg-white/80 theme-dark:bg-[#181825]/80"
         onClick={onClose}
       />
 
@@ -72,9 +73,9 @@ export function DocumentsModal({
                   key={doc.id}
                   className={
                     'rounded-2xl p-4 shadow-sm ' +
-                    (isCurrent
-                      ? 'rainbow-border'
-                      : 'border border-slate-200 bg-white/80 backdrop-blur')
+                      (isCurrent
+                        ? 'theme-rainbow:rainbow-border border-2 border-blue-400 theme-light:border-blue-400 theme-dark:border-blue-600'
+                        : 'border border-slate-200 bg-white/80 backdrop-blur theme-dark:bg-[#232336]/80')
                   }
                 >
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-12 sm:items-end">

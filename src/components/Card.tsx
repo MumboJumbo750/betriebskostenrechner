@@ -9,7 +9,8 @@ export function Card({
   return (
     <div
       className={classNames(
-        'rainbow-border rounded-2xl shadow-md',
+          'rounded-2xl shadow-md',
+          'theme-rainbow:rainbow-border',
         className,
       )}
       {...props}

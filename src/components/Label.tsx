@@ -9,8 +9,8 @@ export function Label({
   return (
     <div
       className={classNames(
-        'flex items-center gap-2 text-xs font-semibold text-slate-700',
-        'before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-gradient-to-r before:from-pink-500 before:via-amber-300 before:to-sky-500 before:shadow-sm',
+          'flex items-center gap-2 text-xs font-semibold text-slate-700',
+          'theme-rainbow:before:inline-block theme-rainbow:before:h-2 theme-rainbow:before:w-2 theme-rainbow:before:rounded-full theme-rainbow:before:bg-gradient-to-r theme-rainbow:before:from-pink-500 theme-rainbow:before:via-amber-300 theme-rainbow:before:to-sky-500 theme-rainbow:before:shadow-sm',
         className,
       )}
       {...props}
