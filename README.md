@@ -88,3 +88,8 @@ Wenn du gerade auf Windows bist, kannst du den macOS Build automatisch in GitHub
 Workflow: `.github/workflows/build-desktop.yml` (manuell per **Run workflow** startbar).
 
 Die Artefakte findest du danach unter **Actions → Workflow Run → Artifacts**.
+
+**Kompatibilität:** macOS Build ist auf **Monterey (12.0+)** ausgelegt (z.B. 12.7.6).
+
+- Intel Mac: nimm das **x64** Artefakt/Bundle
+- Apple Silicon (M1/M2/M3): nimm das **arm64** Artefakt/Bundle
