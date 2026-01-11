@@ -5,7 +5,7 @@ export function SummaryTable({ result }: { result: CalculationResult }) {
   return (
     <div className="rainbow-border overflow-x-auto rounded-2xl shadow-sm">
       <table className="min-w-[1040px] w-full text-left text-sm">
-        <thead className="bg-gradient-to-r from-pink-50 via-amber-50 to-sky-50 text-slate-700">
+        <thead className="theme-rainbow:bg-gradient-to-r theme-rainbow:from-pink-50 theme-rainbow:via-amber-50 theme-rainbow:to-sky-50 theme-rainbow:text-slate-700 theme-light:bg-slate-100 theme-light:text-blue-900 theme-dark:bg-[#232336] theme-dark:text-blue-100">
           <tr>
             <th className="px-4 py-3 font-semibold">Partei</th>
             <th className="px-4 py-3 font-semibold">m²</th>

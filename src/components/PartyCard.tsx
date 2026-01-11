@@ -1,4 +1,4 @@
-import { Plus, Trash2 } from 'lucide-react'
+import { Trash2, Plus } from 'lucide-react'
 import type { Party } from '../types'
 import { newId } from '../lib/ids'
 import { toNonNegativeNumber } from '../lib/number'
@@ -56,42 +56,34 @@ export function PartyCard({
             />
           </div>
         </div>
-
         <Button variant="secondary" size="sm" onClick={onRemove} title="Partei entfernen">
-          <Trash2 className="h-4 w-4" />
+          <Trash2 className="h-4 w-4 theme-light:text-rose-600 theme-dark:text-rose-400" />
           Entfernen
         </Button>
       </CardHeader>
-
       <CardBody>
-        <div className="mb-3 flex items-center justify-between">
-          <div>
-            <div className="text-sm font-semibold text-slate-900">Heiz-Zähler</div>
-            <div className="text-xs text-slate-500">Werte werden für Heizkosten-Anteil verwendet.</div>
-          </div>
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() =>
-              onChange({
-                ...party,
-                meters: [
-                  ...party.meters,
-                  {
-                    id: newId(),
-                    label: `Zähler ${party.meters.length + 1}`,
-                    value: 0,
-                  },
-                ],
-              })
-            }
-          >
-            <Plus className="h-4 w-4" />
-            Zähler hinzufügen
-          </Button>
-        </div>
-
-        <div className="space-y-2">
+        <div className="text-xs text-slate-500 mb-2">Werte werden für Heizkosten-Anteil verwendet.</div>
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() =>
+            onChange({
+              ...party,
+              meters: [
+                ...party.meters,
+                {
+                  id: newId(),
+                  label: `Zähler ${party.meters.length + 1}`,
+                  value: 0,
+                },
+              ],
+            })
+          }
+        >
+          <Plus className="h-4 w-4" />
+          Zähler hinzufügen
+        </Button>
+        <div className="space-y-2 mt-4">
           {party.meters.map((meter) => (
             <div
               key={meter.id}
@@ -149,7 +141,7 @@ export function PartyCard({
                       : 'Zähler entfernen'
                   }
                 >
-                  <Trash2 className="h-4 w-4" />
+                  <Trash2 className="h-4 w-4 theme-light:text-rose-600 theme-dark:text-rose-400" />
                   Entfernen
                 </Button>
               </div>

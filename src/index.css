@@ -7,8 +7,12 @@ body {
   height: 100%;
 }
 
+
 body {
   margin: 0;
+}
+
+.theme-rainbow {
   background:
     radial-gradient(1100px 650px at 10% 0%, rgba(255, 0, 128, 0.18) 0%, transparent 60%),
     radial-gradient(1000px 600px at 85% 10%, rgba(255, 196, 0, 0.20) 0%, transparent 55%),
@@ -16,6 +20,67 @@ body {
     radial-gradient(900px 600px at 70% 90%, rgba(0, 176, 255, 0.16) 0%, transparent 60%),
     radial-gradient(900px 600px at 50% 40%, rgba(142, 45, 226, 0.12) 0%, transparent 60%),
     linear-gradient(180deg, #ffffff 0%, #f8fafc 40%, #ffffff 100%);
+  color: #222;
+}
+
+.theme-light {
+  background: #f8fafc;
+  color: #222;
+}
+
+.theme-dark {
+  background: #18181b;
+  color: #f3f3f3;
+}
+
+.theme-light .rainbow-border,
+.theme-dark .rainbow-border {
+  border: 1px solid #e2e8f0;
+  background: #fff;
+}
+
+.theme-dark .rainbow-border {
+  background: #232336;
+  border-color: #232336;
+}
+
+.theme-light .bg-slate-50,
+.theme-dark .bg-slate-50 {
+  background: #f1f5f9 !important;
+}
+.theme-dark .bg-slate-50 {
+  background: #232336 !important;
+}
+.theme-dark .bg-white,
+.theme-dark .bg-white\/80 {
+  background: #232336 !important;
+  color: #f3f3f3 !important;
+}
+.theme-dark .border-slate-200 {
+  border-color: #35354a !important;
+}
+.theme-dark .text-slate-900 {
+  color: #f3f3f3 !important;
+}
+.theme-dark .text-slate-700,
+.theme-dark .text-slate-600,
+.theme-dark .text-slate-500 {
+  color: #b0b0c3 !important;
+}
+.theme-dark .text-amber-900 {
+  color: #ffe082 !important;
+}
+.theme-dark .bg-amber-50 {
+  background: #3a2c00 !important;
+}
+.theme-dark .border-amber-200 {
+  border-color: #ffe082 !important;
+}
+.theme-dark .bg-rose-50 {
+  background: #3a1a1a !important;
+}
+.theme-dark .border-rose-200 {
+  border-color: #ffb4b4 !important;
 }
 
 :root {

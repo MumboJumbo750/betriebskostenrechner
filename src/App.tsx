@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Calculator, Download, FileText, Plus, Printer, RotateCcw, Upload } from 'lucide-react'
+import { Download, FileText, Plus, Printer, RotateCcw, Upload } from 'lucide-react'
 import { Breakdown } from './components/Breakdown'
 import { Button } from './components/Button'
 import { Card, CardBody, CardHeader } from './components/Card'
@@ -25,6 +25,21 @@ function App() {
   const [page, setPage] = useState<'bkv' | 'euer'>(() =>
     window.location.hash === '#euer' ? 'euer' : 'bkv',
   )
+
+  // Theme logic
+  const themeOptions = [
+    { key: 'rainbow', label: '🌈 Rainbow' },
+    { key: 'light', label: '☀️ Light' },
+    { key: 'dark', label: '🌙 Dark' },
+  ];
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('bkv_theme') || 'rainbow';
+  });
+  useEffect(() => {
+    localStorage.setItem('bkv_theme', theme);
+    document.documentElement.classList.remove('theme-rainbow', 'theme-light', 'theme-dark');
+    document.documentElement.classList.add(`theme-${theme}`);
+  }, [theme]);
 
   useEffect(() => {
     const onHash = () => setPage(window.location.hash === '#euer' ? 'euer' : 'bkv')
@@ -162,6 +177,21 @@ function App() {
 
   return (
     <div className="min-h-screen">
+      <div className="flex justify-end items-center gap-2 px-4 pt-4 print:hidden">
+        <div className="flex gap-1">
+          {themeOptions.map((opt) => (
+            <Button
+              key={opt.key}
+              variant={theme === opt.key ? 'primary' : 'secondary'}
+              size="sm"
+              onClick={() => setTheme(opt.key)}
+              title={`Theme: ${opt.label}`}
+            >
+              {opt.label}
+            </Button>
+          ))}
+        </div>
+      </div>
       <div className="mx-auto max-w-6xl px-4 py-8">
         <DocumentsModal
           open={docsOpen}
@@ -222,8 +252,8 @@ function App() {
 
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <div className="rainbow-border inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium text-slate-700 shadow-sm">
-              <Calculator className="h-4 w-4" />
+            <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium theme-rainbow:rainbow-border theme-light:bg-blue-100 theme-dark:bg-[#232336] theme-light:text-blue-900 theme-dark:text-blue-100 shadow-sm">
+              <span className="inline-block w-3 h-3 rounded-full theme-rainbow:bg-gradient-to-r theme-rainbow:from-pink-500 theme-rainbow:via-amber-300 theme-rainbow:to-sky-500 theme-light:bg-blue-400 theme-dark:bg-blue-700 mr-2"></span>
               Betriebskostenabrechnung
             </div>
             <h1 className="mt-3 text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">

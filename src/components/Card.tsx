@@ -9,7 +9,7 @@ export function Card({
   return (
     <div
       className={classNames(
-        'rainbow-border rounded-2xl shadow-md backdrop-blur',
+        'rainbow-border rounded-2xl shadow-md',
         className,
       )}
       {...props}

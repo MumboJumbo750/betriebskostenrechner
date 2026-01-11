@@ -19,8 +19,8 @@ export function Breakdown({
         return (
           <div key={p.partyId} className="rounded-2xl border border-slate-200 bg-white p-4">
             <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-              <div className="text-sm font-semibold text-slate-900">{p.partyName}</div>
-              <div className="text-sm font-semibold text-slate-900">{formatEUR(p.total)}</div>
+              <div className="text-sm font-semibold theme-light:text-blue-900 theme-dark:text-blue-100 text-slate-900">{p.partyName}</div>
+              <div className="text-sm font-semibold theme-light:text-blue-900 theme-dark:text-blue-100 text-slate-900">{formatEUR(p.total)}</div>
             </div>
 
             <div className="mt-3 grid grid-cols-1 gap-2 text-sm text-slate-700">

@@ -8,9 +8,10 @@ export function Input({ className, ...props }: Props) {
   return (
     <input
       className={classNames(
-        'w-full rounded-xl border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm backdrop-blur',
-        'outline-none ring-0 focus:border-pink-300 focus:ring-4 focus:ring-pink-100',
+        'w-full rounded-xl border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm',
+        'outline-none ring-0 focus:border-blue-400 focus:ring-4 focus:ring-blue-100',
         'disabled:bg-slate-50 disabled:text-slate-500',
+        'theme-dark:bg-[#232336] theme-dark:text-blue-100',
         className,
       )}
       {...props}
