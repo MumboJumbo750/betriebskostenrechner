@@ -4,6 +4,7 @@ import { Breakdown } from './components/Breakdown'
 import { Button } from './components/Button'
 import { Card, CardBody, CardHeader } from './components/Card'
 import { DocumentsModal } from './components/DocumentsModal'
+import { EuerPage } from './components/EuerPage'
 import { Input } from './components/Input'
 import { Label } from './components/Label'
 import { PartyCard } from './components/PartyCard'
@@ -21,6 +22,16 @@ import { downloadJson, makeExportFile, normalizeState } from './lib/exportImport
 import type { AppState, Party } from './types'
 
 function App() {
+  const [page, setPage] = useState<'bkv' | 'euer'>(() =>
+    window.location.hash === '#euer' ? 'euer' : 'bkv',
+  )
+
+  useEffect(() => {
+    const onHash = () => setPage(window.location.hash === '#euer' ? 'euer' : 'bkv')
+    window.addEventListener('hashchange', onHash)
+    return () => window.removeEventListener('hashchange', onHash)
+  }, [])
+
   const [workspace, setWorkspace] = useLocalStorageState(
     'betriebkostenverrechner_workspace_v1',
     createDefaultWorkspace(),
@@ -228,6 +239,29 @@ function App() {
 
           <div className="flex flex-wrap gap-2 print:hidden">
             <Button
+              variant={page === 'bkv' ? 'primary' : 'secondary'}
+              onClick={() => {
+                window.location.hash = ''
+                setPage('bkv')
+              }}
+              title="Betriebskosten-Verrechner"
+            >
+              Betriebskosten
+            </Button>
+
+            <Button
+              variant={page === 'euer' ? 'primary' : 'secondary'}
+              onClick={() => {
+                window.location.hash = '#euer'
+                setPage('euer')
+              }}
+              title="Einnahmenüberschussrechnung (EÜR)"
+            >
+              EÜR
+            </Button>
+
+            {page === 'bkv' ? (
+            <Button
               variant="secondary"
               onClick={() => setState(createDefaultState())}
               title="Alles zurücksetzen"
@@ -235,11 +269,14 @@ function App() {
               <RotateCcw className="h-4 w-4" />
               Reset
             </Button>
+            ) : null}
 
-            <Button variant="secondary" onClick={() => setDocsOpen(true)} title="Dokumente verwalten">
-              <FileText className="h-4 w-4" />
-              Dokumente
-            </Button>
+            {page === 'bkv' ? (
+              <Button variant="secondary" onClick={() => setDocsOpen(true)} title="Dokumente verwalten">
+                <FileText className="h-4 w-4" />
+                Dokumente
+              </Button>
+            ) : null}
 
             <input
               ref={fileInputRef}
@@ -252,37 +289,43 @@ function App() {
               }}
             />
 
-            <Button
-              variant="secondary"
-              onClick={() => fileInputRef.current?.click()}
-              title="Daten importieren (.json)"
-            >
-              <Upload className="h-4 w-4" />
-              Import
-            </Button>
+            {page === 'bkv' ? (
+              <Button
+                variant="secondary"
+                onClick={() => fileInputRef.current?.click()}
+                title="Daten importieren (.json)"
+              >
+                <Upload className="h-4 w-4" />
+                Import
+              </Button>
+            ) : null}
 
-            <Button
-              variant="secondary"
-              onClick={() =>
-                downloadJson(
-                  `betriebskosten-${currentDoc.name.replaceAll(' ', '_')}-${new Date().toISOString().slice(0, 10)}.json`,
-                  makeExportFile(state, currentDoc.name),
-                )
-              }
-              title="Daten exportieren (.json)"
-            >
-              <Download className="h-4 w-4" />
-              Export
-            </Button>
+            {page === 'bkv' ? (
+              <Button
+                variant="secondary"
+                onClick={() =>
+                  downloadJson(
+                    `betriebskosten-${currentDoc.name.replaceAll(' ', '_')}-${new Date().toISOString().slice(0, 10)}.json`,
+                    makeExportFile(state, currentDoc.name),
+                  )
+                }
+                title="Daten exportieren (.json)"
+              >
+                <Download className="h-4 w-4" />
+                Export
+              </Button>
+            ) : null}
 
-            <Button
-              variant="secondary"
-              onClick={() => downloadOverallPdf(state, result)}
-              title="PDF Gesamtübersicht"
-            >
-              <Download className="h-4 w-4" />
-              PDF Übersicht
-            </Button>
+            {page === 'bkv' ? (
+              <Button
+                variant="secondary"
+                onClick={() => downloadOverallPdf(state, result)}
+                title="PDF Gesamtübersicht"
+              >
+                <Download className="h-4 w-4" />
+                PDF Übersicht
+              </Button>
+            ) : null}
             <Button variant="secondary" onClick={() => window.print()} title="Drucken">
               <Printer className="h-4 w-4" />
               Drucken
@@ -290,11 +333,14 @@ function App() {
           </div>
         </div>
 
-        {importError ? (
+        {page === 'bkv' && importError ? (
           <div className="mt-4 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-900">
             Import fehlgeschlagen: {importError}
           </div>
         ) : null}
+
+        {page === 'bkv' ? (
+          <>
 
         <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
           <Card className="lg:col-span-2">
@@ -464,9 +510,13 @@ function App() {
           <Breakdown result={result} baseTotal={baseTotal} heatTotal={heatTotal} />
         </div>
 
-        <div className="mt-10 text-xs text-slate-500 print:hidden">
-          Speichert automatisch im Browser (localStorage). Beträge werden auf 2 Nachkommastellen gerundet.
-        </div>
+          <div className="mt-10 text-xs text-slate-500 print:hidden">
+            Speichert automatisch im Browser (localStorage). Beträge werden auf 2 Nachkommastellen gerundet.
+          </div>
+          </>
+        ) : (
+          <EuerPage />
+        )}
       </div>
     </div>
   )

@@ -17,6 +17,7 @@ Die App zeigt pro Partei eine übersichtliche Aufteilung inkl. Formel/„Rechnun
 - Daten Export/Import als JSON Datei
 - Autosave im Browser (localStorage)
 - Druckansicht (Browser-Print)
+- Zweite Seite: **Einnahmenüberschussrechnung (EÜR)** (Einnahmen/Ausgaben + Überschuss), inkl. CSV Export
 
 ## Mehrere Abrechnungen ("Dokumente")
 
@@ -24,18 +25,18 @@ Die App speichert nicht nur *eine* Abrechnung, sondern mehrere Dokumente (ähnli
 
 - Oben rechts gibt es den Button **Dokumente**.
 - Dort kannst du:
-	- **Neues Dokument** anlegen
-	- Dokument **umbenennen** (Name-Feld)
-	- Dokument **öffnen** (aktiv schalten)
-	- Dokument **duplizieren** (Kopie)
-	- Dokument **löschen** (mindestens 1 Dokument bleibt immer)
+  - **Neues Dokument** anlegen
+  - Dokument **umbenennen** (Name-Feld)
+  - Dokument **öffnen** (aktiv schalten)
+  - Dokument **duplizieren** (Kopie)
+  - Dokument **löschen** (mindestens 1 Dokument bleibt immer)
 
 Export/Import bezieht sich immer auf das aktuell geöffnete Dokument:
 
 - **Export**: lädt eine JSON-Datei inkl. Dokumentname.
 - **Import**: fragt nach dem Einfügen:
-	- **OK** = aktuelles Dokument überschreiben
-	- **Abbrechen** = als neues Dokument importieren
+  - **OK** = aktuelles Dokument überschreiben
+  - **Abbrechen** = als neues Dokument importieren
 
 ## Development
 
