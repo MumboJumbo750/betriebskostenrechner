@@ -38,8 +38,7 @@ export function DocumentsModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div
-        className="absolute inset-0 bg-gradient-to-br from-pink-500/20 via-amber-400/15 to-sky-500/20"
-          className="absolute inset-0 theme-rainbow:bg-gradient-to-br theme-rainbow:from-pink-500/20 theme-rainbow:via-amber-400/15 theme-rainbow:to-sky-500/20 bg-white/80 theme-light:bg-white/80 theme-dark:bg-[#181825]/80"
+        className="absolute inset-0 theme-rainbow:bg-gradient-to-br theme-rainbow:from-pink-500/20 theme-rainbow:via-amber-400/15 theme-rainbow:to-sky-500/20 bg-white/80 theme-light:bg-white/80 theme-dark:bg-[#181825]/80"
         onClick={onClose}
       />
 
