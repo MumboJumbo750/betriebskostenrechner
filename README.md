@@ -38,6 +38,8 @@ Export/Import bezieht sich immer auf das aktuell geöffnete Dokument:
   - **OK** = aktuelles Dokument überschreiben
   - **Abbrechen** = als neues Dokument importieren
 
+Hinweis: Die **EÜR** hat ebenfalls eine eigene Dokumentenverwaltung (Button **Dokumente** auf der EÜR-Seite).
+
 ## Development
 
 Install:

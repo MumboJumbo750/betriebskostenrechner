@@ -1,10 +1,16 @@
 import { Copy, FilePlus2, Trash2, X } from 'lucide-react'
 
-import type { Document } from '../lib/documents'
 import { Button } from './Button'
 import { Card, CardBody, CardHeader } from './Card'
 import { Input } from './Input'
 import { Label } from './Label'
+
+type DocLike = {
+  id: string
+  name: string
+  createdAt: string
+  updatedAt: string
+}
 
 export function DocumentsModal({
   open,
@@ -18,7 +24,7 @@ export function DocumentsModal({
   onDelete,
 }: {
   open: boolean
-  documents: Document[]
+  documents: DocLike[]
   currentDocumentId: string
   onClose: () => void
   onSelect: (id: string) => void

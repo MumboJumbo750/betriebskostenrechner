@@ -1,8 +1,9 @@
-import { Download, FileDown, Plus, Printer, RotateCcw, Trash2 } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { Download, FileDown, FileText, Plus, Printer, RotateCcw, Trash2 } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { Button } from './Button'
 import { Card, CardBody, CardHeader } from './Card'
+import { DocumentsModal } from './DocumentsModal'
 import { Input } from './Input'
 import { Label } from './Label'
 import { SectionTitle } from './SectionTitle'
@@ -13,7 +14,6 @@ import { toNonNegativeNumber } from '../lib/number'
 import { classNames } from '../lib/ui'
 import {
   calculateEuer,
-  createDefaultEuerState,
   filterEntriesByYear,
   getAvailableYears,
   type EuerEntry,
@@ -21,6 +21,11 @@ import {
 } from '../lib/euer'
 import { useLocalStorageState } from '../lib/useLocalStorageState'
 import { downloadEuerPdf } from '../lib/euerPdf'
+import {
+  createDefaultEuerWorkspace,
+  createEuerDocument,
+  normalizeEuerWorkspace,
+} from '../lib/euerWorkspace'
 
 function Select({
   className,
@@ -43,7 +48,35 @@ function guessCurrentYear() {
 }
 
 export function EuerPage() {
-  const [state, setState] = useLocalStorageState('euer_state_v1', createDefaultEuerState())
+  const [workspace, setWorkspace] = useLocalStorageState(
+    'betriebkostenverrechner_euer_workspace_v1',
+    createDefaultEuerWorkspace(),
+  )
+
+  // In case user imports/edits localStorage manually.
+  useEffect(() => {
+    setWorkspace((prev) => normalizeEuerWorkspace(prev))
+  }, [setWorkspace])
+
+  const [docsOpen, setDocsOpen] = useState(false)
+
+  const currentDoc = useMemo(() => {
+    const found = workspace.documents.find((d) => d.id === workspace.currentDocumentId)
+    return found ?? workspace.documents[0]
+  }, [workspace])
+
+  const state = currentDoc.state
+  const setState = (next: typeof state) => {
+    setWorkspace((prev) => {
+      const now = new Date().toISOString()
+      return {
+        ...prev,
+        documents: prev.documents.map((d) =>
+          d.id === prev.currentDocumentId ? { ...d, state: next, updatedAt: now } : d,
+        ),
+      }
+    })
+  }
   const years = useMemo(() => {
     const y = getAvailableYears(state.entries)
     return y.length ? y : [guessCurrentYear()]
@@ -112,6 +145,57 @@ export function EuerPage() {
 
   return (
     <>
+      <DocumentsModal
+        open={docsOpen}
+        documents={workspace.documents}
+        currentDocumentId={workspace.currentDocumentId}
+        onClose={() => setDocsOpen(false)}
+        onSelect={(id) => setWorkspace((prev) => ({ ...prev, currentDocumentId: id }))}
+        onCreate={() =>
+          setWorkspace((prev) => {
+            const newDoc = createEuerDocument(`EÜR ${prev.documents.length + 1}`)
+            return {
+              ...prev,
+              currentDocumentId: newDoc.id,
+              documents: [newDoc, ...prev.documents],
+            }
+          })
+        }
+        onRename={(id, name) =>
+          setWorkspace((prev) => ({
+            ...prev,
+            documents: prev.documents.map((d) => (d.id === id ? { ...d, name } : d)),
+          }))
+        }
+        onDuplicate={(id) =>
+          setWorkspace((prev) => {
+            const src = prev.documents.find((d) => d.id === id)
+            if (!src) return prev
+            const copy = createEuerDocument(`${src.name} (Kopie)`, src.state)
+            return {
+              ...prev,
+              currentDocumentId: copy.id,
+              documents: [copy, ...prev.documents],
+            }
+          })
+        }
+        onDelete={(id) =>
+          setWorkspace((prev) => {
+            if (prev.documents.length <= 1) return prev
+            const remaining = prev.documents.filter((d) => d.id !== id)
+            const nextCurrent =
+              prev.currentDocumentId === id
+                ? remaining[0]?.id ?? prev.currentDocumentId
+                : prev.currentDocumentId
+            return {
+              ...prev,
+              currentDocumentId: nextCurrent,
+              documents: remaining,
+            }
+          })
+        }
+      />
+
       <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
         <Card className="lg:col-span-2">
           <CardHeader>
@@ -134,7 +218,16 @@ export function EuerPage() {
               </div>
 
               <div className="flex flex-wrap items-end gap-2 print:hidden">
-                <Button variant="secondary" onClick={() => setState(createDefaultEuerState())} title="Zurücksetzen">
+                <Button variant="secondary" onClick={() => setDocsOpen(true)} title="Dokumente verwalten">
+                  <FileText className="h-4 w-4" />
+                  Dokumente
+                </Button>
+
+                <Button
+                  variant="secondary"
+                  onClick={() => setState({ entries: [] })}
+                  title="Alle Buchungen im aktuellen Dokument löschen"
+                >
                   <RotateCcw className="h-4 w-4" />
                   Reset
                 </Button>
@@ -163,6 +256,10 @@ export function EuerPage() {
                   Drucken
                 </Button>
               </div>
+            </div>
+
+            <div className="mt-2 text-xs font-medium text-slate-500">
+              Dokument: <span className="text-slate-700">{currentDoc.name}</span>
             </div>
 
             <div className="mt-4 flex flex-wrap gap-2 print:hidden">
