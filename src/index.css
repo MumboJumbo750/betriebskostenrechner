@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(1100px 650px at 10% 0%, rgba(255, 0, 128, 0.18) 0%, transparent 60%),
+    radial-gradient(1000px 600px at 85% 10%, rgba(255, 196, 0, 0.20) 0%, transparent 55%),
+    radial-gradient(1000px 650px at 30% 95%, rgba(0, 230, 118, 0.18) 0%, transparent 60%),
+    radial-gradient(900px 600px at 70% 90%, rgba(0, 176, 255, 0.16) 0%, transparent 60%),
+    radial-gradient(900px 600px at 50% 40%, rgba(142, 45, 226, 0.12) 0%, transparent 60%),
+    linear-gradient(180deg, #ffffff 0%, #f8fafc 40%, #ffffff 100%);
+}
+
+:root {
+  --rainbow-pink: #ff2d95;
+  --rainbow-orange: #ff8a00;
+  --rainbow-yellow: #ffe600;
+  --rainbow-green: #00e676;
+  --rainbow-cyan: #00b0ff;
+  --rainbow-purple: #8e2de2;
+}
+
+/* Reusable rainbow border that still looks good on white cards. */
+.rainbow-border {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.86)) padding-box,
+    conic-gradient(
+        from 180deg,
+        var(--rainbow-pink),
+        var(--rainbow-orange),
+        var(--rainbow-yellow),
+        var(--rainbow-green),
+        var(--rainbow-cyan),
+        var(--rainbow-purple),
+        var(--rainbow-pink)
+      )
+      border-box;
+}
+
