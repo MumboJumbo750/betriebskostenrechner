@@ -1,4 +1,4 @@
-import { Download, Plus, Printer, RotateCcw, Trash2 } from 'lucide-react'
+import { Download, FileDown, Plus, Printer, RotateCcw, Trash2 } from 'lucide-react'
 import { useMemo, useState } from 'react'
 
 import { Button } from './Button'
@@ -20,6 +20,7 @@ import {
   type EuerEntryType,
 } from '../lib/euer'
 import { useLocalStorageState } from '../lib/useLocalStorageState'
+import { downloadEuerPdf } from '../lib/euerPdf'
 
 function Select({
   className,
@@ -136,6 +137,22 @@ export function EuerPage() {
                 <Button variant="secondary" onClick={() => setState(createDefaultEuerState())} title="Zurücksetzen">
                   <RotateCcw className="h-4 w-4" />
                   Reset
+                </Button>
+                <Button
+                  variant="secondary"
+                  onClick={() =>
+                    downloadEuerPdf({
+                      year: selectedYear,
+                      entries,
+                      income: totals.income,
+                      expense: totals.expense,
+                      surplus: totals.surplus,
+                    })
+                  }
+                  title="PDF Export"
+                >
+                  <FileDown className="h-4 w-4" />
+                  PDF
                 </Button>
                 <Button variant="secondary" onClick={() => downloadCsv()} title="CSV Export">
                   <Download className="h-4 w-4" />

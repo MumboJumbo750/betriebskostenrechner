@@ -17,7 +17,7 @@ Die App zeigt pro Partei eine übersichtliche Aufteilung inkl. Formel/„Rechnun
 - Daten Export/Import als JSON Datei
 - Autosave im Browser (localStorage)
 - Druckansicht (Browser-Print)
-- Zweite Seite: **Einnahmenüberschussrechnung (EÜR)** (Einnahmen/Ausgaben + Überschuss), inkl. CSV Export
+- Zweite Seite: **Einnahmenüberschussrechnung (EÜR)** (Einnahmen/Ausgaben + Überschuss), inkl. CSV + PDF Export
 
 ## Mehrere Abrechnungen ("Dokumente")
 
