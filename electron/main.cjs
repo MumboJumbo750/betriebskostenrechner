@@ -19,7 +19,14 @@ function createWindow() {
     win.loadURL('http://localhost:5173/')
     win.webContents.openDevTools({ mode: 'detach' })
   } else {
-    win.loadFile(path.join(__dirname, '../dist/index.html'))
+    const indexPath = path.join(__dirname, '../dist/index.html');
+    win.loadFile(indexPath).catch((err) => {
+      const fs = require('fs');
+      const logPath = path.join(app.getPath('userData'), 'renderer-load-error.log');
+      const errorMsg = `[${new Date().toISOString()}] Failed to load index.html: ${err.stack || err}\n`;
+      fs.appendFileSync(logPath, errorMsg);
+      console.error('Failed to load renderer:', err);
+    });
   }
 }
 
